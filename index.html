@@ -1,0 +1,850 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>JUDGE — Judgments, Uncertainties, and Decisions in Generative AI Safety Practice</title>
+  <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy: #1e3765;
+      --lavender: #efe9f7;
+      --lavender-dark: #ddd4ef;
+      --white: #ffffff;
+      --text-secondary: #4a5c80;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      color: var(--navy);
+      background: var(--white);
+      line-height: 1.6;
+    }
+
+    a { color: var(--navy); }
+
+    /* ── NAV ── */
+    nav {
+      padding: 16px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--lavender-dark);
+      gap: 20px;
+    }
+
+    nav .wordmark {
+      font-family: 'Crimson Pro', serif;
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--navy);
+      flex-shrink: 0;
+      text-decoration: none;
+    }
+
+    nav .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    nav .conference-tag {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 6px 14px;
+      background: var(--lavender);
+      border-radius: 4px;
+    }
+
+    nav .conference-tag .conf-logo {
+      height: 28px;
+      width: auto;
+      display: block;
+    }
+
+    nav .conference-tag .conf-name {
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--navy);
+      white-space: nowrap;
+    }
+
+    nav a.register-nav {
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--navy);
+      text-decoration: none;
+      border: 1.5px solid var(--navy);
+      padding: 7px 16px;
+      border-radius: 3px;
+      white-space: nowrap;
+      transition: background 0.2s, color 0.2s;
+    }
+
+    nav a.register-nav:hover {
+      background: var(--navy);
+      color: var(--white);
+    }
+
+    /* ── HERO ── */
+    .hero {
+      padding: 90px 40px 80px;
+      max-width: 780px;
+      margin: 0 auto;
+    }
+
+    .hero .eyebrow {
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+      margin-bottom: 20px;
+    }
+
+    .hero h1 {
+      font-family: 'Crimson Pro', serif;
+      font-size: clamp(2.2rem, 5vw, 3.4rem);
+      font-weight: 600;
+      line-height: 1.15;
+      color: var(--navy);
+      margin-bottom: 28px;
+    }
+
+    .hero p {
+      font-size: 1.05rem;
+      color: var(--text-secondary);
+      max-width: 600px;
+      line-height: 1.75;
+    }
+
+    /* ── DETAILS BAND ── */
+    .details-band {
+      background: var(--lavender);
+      padding: 28px 40px;
+      display: flex;
+      gap: 48px;
+      flex-wrap: wrap;
+      max-width: 780px;
+      margin: 0 auto;
+      border-radius: 8px;
+    }
+
+    .details-band .detail {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .details-band .detail-label {
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+    }
+
+    .details-band .detail-value {
+      font-size: 0.97rem;
+      font-weight: 600;
+      color: var(--navy);
+    }
+
+    /* ── SECTIONS ── */
+    .section {
+      padding: 72px 40px;
+      max-width: 780px;
+      margin: 0 auto;
+      border-bottom: 1px solid var(--lavender-dark);
+    }
+
+    .section h2 {
+      font-family: 'Crimson Pro', serif;
+      font-size: 1.75rem;
+      font-weight: 600;
+      color: var(--navy);
+      margin-bottom: 20px;
+    }
+
+    .section p {
+      font-size: 0.97rem;
+      color: var(--text-secondary);
+      line-height: 1.8;
+      margin-bottom: 16px;
+    }
+
+    .section p:last-child { margin-bottom: 0; }
+
+    .section strong { color: var(--navy); }
+
+    /* ── THEME CALLOUT ── */
+    .theme-callout {
+      background: var(--lavender);
+      border-left: 4px solid var(--navy);
+      border-radius: 6px;
+      padding: 24px 26px;
+      margin: 28px 0;
+    }
+
+    .theme-callout .theme-label {
+      display: block;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+      margin-bottom: 8px;
+    }
+
+    .theme-callout .theme-title {
+      display: block;
+      font-family: 'Crimson Pro', serif;
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: var(--navy);
+      line-height: 1.25;
+      margin-bottom: 10px;
+    }
+
+    .theme-callout p {
+      font-size: 0.92rem;
+      margin-bottom: 0;
+    }
+
+    /* ── CARD GRID ── */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+      margin-top: 28px;
+    }
+
+    .card {
+      background: var(--lavender);
+      border-radius: 6px;
+      padding: 24px 22px;
+    }
+
+    .card h3 {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--navy);
+      margin-bottom: 8px;
+    }
+
+    .card p {
+      font-size: 0.88rem;
+      color: var(--text-secondary);
+      line-height: 1.65;
+      margin-bottom: 0;
+    }
+
+    /* ── AUDIENCE ── */
+    .audience-list {
+      margin-top: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .audience-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      padding: 18px 20px;
+      background: var(--lavender);
+      border-radius: 6px;
+    }
+
+    .audience-item .role {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--navy);
+      min-width: 120px;
+    }
+
+    .audience-item .role-desc {
+      font-size: 0.88rem;
+      color: var(--text-secondary);
+      line-height: 1.65;
+    }
+
+    /* ── SCHEDULE ── */
+    .session {
+      margin-top: 32px;
+    }
+
+    .session-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 12px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid var(--navy);
+      margin-bottom: 4px;
+    }
+
+    .session-header h3 {
+      font-family: 'Crimson Pro', serif;
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: var(--navy);
+    }
+
+    .session-header .session-time {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+      white-space: nowrap;
+    }
+
+    .schedule-item {
+      display: flex;
+      gap: 20px;
+      padding: 18px 0;
+      border-bottom: 1px solid var(--lavender-dark);
+    }
+
+    .schedule-item .duration {
+      flex-shrink: 0;
+      width: 72px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--navy);
+      background: var(--lavender);
+      border-radius: 4px;
+      padding: 4px 0;
+      text-align: center;
+      height: fit-content;
+    }
+
+    .schedule-item h4 {
+      font-size: 0.92rem;
+      font-weight: 600;
+      color: var(--navy);
+      margin-bottom: 4px;
+    }
+
+    .schedule-item p {
+      font-size: 0.88rem;
+      line-height: 1.7;
+      margin-bottom: 0;
+    }
+
+    .break-row {
+      text-align: center;
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+      padding: 18px 0 0;
+    }
+
+    /* ── CFP ── */
+    .cfp-list {
+      list-style: none;
+      margin: 8px 0 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .cfp-list li {
+      font-size: 0.95rem;
+      color: var(--text-secondary);
+      line-height: 1.7;
+      padding-left: 20px;
+      position: relative;
+    }
+
+    .cfp-list li::before {
+      content: "→";
+      position: absolute;
+      left: 0;
+      color: var(--navy);
+      font-weight: 600;
+    }
+
+    .dates-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 12px;
+    }
+
+    .dates-table td {
+      padding: 12px 0;
+      border-bottom: 1px solid var(--lavender-dark);
+      font-size: 0.92rem;
+      color: var(--text-secondary);
+    }
+
+    .dates-table td:last-child {
+      text-align: right;
+      font-weight: 600;
+      color: var(--navy);
+    }
+
+    .section h3.sub {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--navy);
+      margin: 28px 0 8px;
+    }
+
+    /* ── CTA ── */
+    .cta-section {
+      background: var(--navy);
+      padding: 72px 40px;
+      text-align: center;
+    }
+
+    .cta-section h2 {
+      font-family: 'Crimson Pro', serif;
+      font-size: 2rem;
+      font-weight: 600;
+      color: var(--white);
+      margin-bottom: 14px;
+    }
+
+    .cta-section p {
+      font-size: 0.95rem;
+      color: var(--lavender);
+      margin-bottom: 32px;
+    }
+
+    .cta-section a.cta-btn {
+      display: inline-block;
+      background: var(--lavender);
+      color: var(--navy);
+      font-weight: 600;
+      font-size: 0.95rem;
+      text-decoration: none;
+      padding: 14px 36px;
+      border-radius: 4px;
+      transition: background 0.2s;
+    }
+
+    .cta-section a.cta-btn:hover { background: var(--white); }
+
+    /* ── PEOPLE SECTIONS ── */
+    .people-section {
+      padding: 72px 40px;
+      max-width: 900px;
+      margin: 0 auto;
+      border-bottom: 1px solid var(--lavender-dark);
+    }
+
+    .people-section h2 {
+      font-family: 'Crimson Pro', serif;
+      font-size: 1.75rem;
+      font-weight: 600;
+      color: var(--navy);
+      margin-bottom: 36px;
+    }
+
+    .organizers-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 32px 24px;
+    }
+
+    .person-card {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 12px;
+    }
+
+    .person-card .photo {
+      width: 96px;
+      height: 96px;
+      border-radius: 50%;
+      background: var(--lavender);
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+
+    .person-card .photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .person-card .person-name {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--navy);
+      line-height: 1.35;
+    }
+
+    .person-card .person-name a { text-decoration: none; }
+    .person-card .person-name a:hover { text-decoration: underline; }
+
+    .person-card .person-affiliation {
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: var(--text-secondary);
+      margin-top: -6px;
+      line-height: 1.45;
+    }
+
+    /* ── ORG LOGOS ── */
+    .org-logos-section {
+      padding: 52px 40px;
+      max-width: 900px;
+      margin: 0 auto;
+      border-bottom: 1px solid var(--lavender-dark);
+    }
+
+    .logos-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 36px;
+      flex-wrap: wrap;
+    }
+
+    .logo-slot img {
+      height: 38px;
+      width: auto;
+      object-fit: contain;
+      opacity: 0.85;
+      transition: opacity 0.2s;
+    }
+
+    .logo-slot img:hover { opacity: 1; }
+
+    /* ── FOOTER ── */
+    footer {
+      padding: 28px 40px;
+      text-align: center;
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 760px) {
+      .organizers-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+
+    @media (max-width: 700px) {
+      nav { padding: 14px 20px; flex-wrap: wrap; }
+      nav .conference-tag .conf-name { display: none; }
+      .hero { padding: 56px 20px 48px; }
+      .details-band { padding: 24px 20px; gap: 20px; border-radius: 6px; margin: 0 16px; }
+      .section, .people-section, .org-logos-section { padding: 52px 20px; }
+      .cta-section { padding: 56px 20px; }
+      .organizers-grid { grid-template-columns: 1fr 1fr; }
+      .audience-item { flex-direction: column; gap: 6px; }
+      .schedule-item { flex-direction: column; gap: 8px; }
+      footer { padding: 24px 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a class="wordmark" href="#">JUDGE @ CHI 2027</a>
+    <div class="nav-right">
+      <a href="https://chi2027.acm.org/" target="_blank" style="text-decoration: none;">
+        <div class="conference-tag">
+          <img class="conf-logo" src="logo-chi.png" alt="CHI 2027 logo" />
+          <span class="conf-name">CHI 2027 Workshop</span>
+        </div>
+      </a>
+      <a class="register-nav" href="#cfp">Submit</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <div class="hero">
+    <p class="eyebrow">JUDGE · CHI 2027 Workshop</p>
+    <h1>Judgments, Uncertainties, and Decisions in Generative AI Safety Practice</h1>
+    <p>
+      Making LLM-based systems safe rests on a stack of human judgments: where to draw the line, which cases to test, and what to assume when a policy is ambiguous. This workshop brings researchers and practitioners together to surface these judgments and explore AI safety as a human practice as much as a technical exercise.
+    </p>
+  </div>
+
+  <!-- DETAILS BAND -->
+  <div class="details-band">
+    <div class="detail">
+      <span class="detail-label">Conference</span>
+      <span class="detail-value">CHI 2027</span>
+    </div>
+    <div class="detail">
+      <span class="detail-label">Date</span>
+      <span class="detail-value">TBA</span>
+    </div>
+    <div class="detail">
+      <span class="detail-label">Format</span>
+      <span class="detail-value">In-person</span>
+    </div>
+    <div class="detail">
+      <span class="detail-label">Participants</span>
+      <span class="detail-value">40–50</span>
+    </div>
+  </div>
+
+  <!-- 1. ABOUT -->
+  <div class="section" id="about">
+    <h2>About the Workshop</h2>
+    <p>
+      AI safety is often regarded as the most technical of the efforts around responsible AI, centered on computational questions about data and models: safety fine-tuning, guardrail design, red-teaming, and benchmarking. Yet as LLMs are integrated into everyday products and enterprise workflows, practitioners building these systems are mostly concerned with making them safer for their <em>particular</em> application, and their technical workflows rest on human judgment.
+    </p>
+    <p>
+      Consider a data science team that hand-collects preference pairs for a policy-compliance chatbot, confirms only a handful with the governance team, and reports 95% accuracy, quietly baking its own interpretation of ambiguous policies into the model. Or a program manager at an ed-tech startup who plugs a vendor's content-moderation service into a mentoring chatbot for minors, inheriting someone else's definition of harm and thresholds. Whether the work looks technical or not, practitioners fill in uncertainties with their own assumptions, yet the practice pays little attention to them.
+    </p>
+    <p>
+      These judgments are also culturally situated: what counts as harm, and to whom, in one context may not hold in another. Yet the perspectives shaping them remain narrow, with AI ethics and safety research concentrated in Global North contexts.
+    </p>
+
+    <div class="theme-callout">
+      <span class="theme-label">Workshop Theme</span>
+      <span class="theme-title">Human Judgments in AI Safety Practice</span>
+      <p>The assumptions, interpretations, and decisions that practitioners make under uncertainty when making LLM-based systems safer for their applications, shaped by their organizational and cultural contexts.</p>
+    </div>
+
+    <p>The workshop aims to:</p>
+    <ul class="cfp-list">
+      <li><strong>Surface the human assumptions, interpretations, and decisions in safety practice</strong>, and explore how they shape safety workflows and outcomes across the safety pipeline.</li>
+      <li><strong>Create dialogue between research and practice</strong>, sharing what worked and what did not, and building a shared vocabulary across HCI, RAI, and AI safety.</li>
+      <li><strong>Explore how context shapes safety judgments</strong>, with particular attention to the Global South.</li>
+      <li><strong>Map what transfers from HCI research on RAI practice to LLM safety</strong>, and where methods such as checklists, toolkits, and documentation need rethinking.</li>
+      <li><strong>Co-create a research agenda and a community around AI safety in HCI.</strong></li>
+    </ul>
+  </div>
+
+  <!-- 2. WHAT TO EXPECT -->
+  <div class="section" id="expect">
+    <h2>What to Expect</h2>
+    <p>Over two 90-minute sessions, participants will hear perspectives from both research and practice, and work together to trace human judgments through real-world AI safety cases. The workshop will produce:</p>
+    <div class="card-grid">
+      <div class="card">
+        <h3>Workshop Proceedings</h3>
+        <p>With authors' consent, accepted submissions will be published as open-access proceedings on CEUR-WS, with a non-archival option.</p>
+      </div>
+      <div class="card">
+        <h3>A Collection of Judgments</h3>
+        <p>The judgments surfaced across submissions and discussions will be distilled into a curated collection on this website.</p>
+      </div>
+      <div class="card">
+        <h3>A Research Agenda</h3>
+        <p>An initial agenda of open questions and possible interventions for studying and supporting human judgments in AI safety.</p>
+      </div>
+      <div class="card">
+        <h3>A Lasting Community</h3>
+        <p>A Slack group where participants can share work, continue discussions, and collaborate on follow-up outputs before and after the workshop.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3. WHO SHOULD ATTEND -->
+  <div class="section" id="attend">
+    <h2>Who Should Attend</h2>
+    <p>We welcome researchers and practitioners from academia, industry, government, and non-profits working in HCI, Responsible AI, AI safety, or related fields, whether or not they see their work as "technical."</p>
+    <div class="audience-list">
+      <div class="audience-item">
+        <span class="role">Researchers</span>
+        <span class="role-desc">Those studying AI safety, responsible AI, or practitioner work in HCI, NLP, ML, and adjacent fields, including those reflecting on the judgments behind their own benchmarks, taxonomies, and evaluations.</span>
+      </div>
+      <div class="audience-item">
+        <span class="role">Practitioners</span>
+        <span class="role-desc">Data scientists, engineers, product and program managers, and others who make LLM-based systems safer in practice, from building guardrails and preference data to choosing and configuring off-the-shelf safeguards.</span>
+      </div>
+      <div class="audience-item">
+        <span class="role">Governance &amp; Policy</span>
+        <span class="role-desc">People who write the policies, requirements, and standards that safety work tries to implement, and who are interested in how those get interpreted on the ground.</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 4. ACTIVITIES -->
+  <div class="section" id="activities">
+    <h2>Workshop Activities</h2>
+    <p>The workshop runs as two consecutive 90-minute sessions with a break in between: the first focuses on <strong>perspectives from research</strong>, and the second on <strong>perspectives from practice</strong>.</p>
+
+    <div class="session">
+      <div class="session-header">
+        <h3>Session 1: Perspectives from Research</h3>
+        <span class="session-time">90 min</span>
+      </div>
+      <div class="schedule-item">
+        <span class="duration">15 min</span>
+        <div>
+          <h4>Welcome and "Safe Enough?" warm-up</h4>
+          <p>Participants position themselves along a line in the room, from "safe enough to deploy" to "not safe enough," in response to borderline AI safety scenarios, showing how differently people draw the line.</p>
+        </div>
+      </div>
+      <div class="schedule-item">
+        <span class="duration">30 min</span>
+        <div>
+          <h4>Researcher keynote</h4>
+          <p>An invited researcher reflects on the human judgments embedded in how AI safety research is conducted, from benchmarks and taxonomies to evaluation practices.</p>
+        </div>
+      </div>
+      <div class="schedule-item">
+        <span class="duration">30 min</span>
+        <div>
+          <h4>Lightning talks</h4>
+          <p>Authors of accepted submissions give short talks (about 3 minutes each), grouped by related themes.</p>
+        </div>
+      </div>
+      <div class="schedule-item">
+        <span class="duration">15 min</span>
+        <div>
+          <h4>Author Q&amp;A panel</h4>
+          <p>Speakers come together for a moderated Q&amp;A, with emerging themes captured on a shared board that feeds into Session 2.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="break-row">Break</div>
+
+    <div class="session">
+      <div class="session-header">
+        <h3>Session 2: Perspectives from Practice</h3>
+        <span class="session-time">90 min</span>
+      </div>
+      <div class="schedule-item">
+        <span class="duration">30 min</span>
+        <div>
+          <h4>Practitioner keynote</h4>
+          <p>An invited AI safety practitioner shares how they made an LLM-based system safer in a particular setting: what they were uncertain about, where they drew the line, and what they would do differently.</p>
+        </div>
+      </div>
+      <div class="schedule-item">
+        <span class="duration">35 min</span>
+        <div>
+          <h4>Judgment tracing</h4>
+          <p>In groups of 5–6, participants take up a real-world case and trace backward from the incident along the stages of a safety workflow to identify where judgments were made, by whom, under what uncertainty, and in which context. Groups then revisit the case from different roles to see how "safe enough" shifts depending on where one sits.</p>
+        </div>
+      </div>
+      <div class="schedule-item">
+        <span class="duration">15 min</span>
+        <div>
+          <h4>Group share-outs</h4>
+          <p>Each group presents their traced case and key insights to the room.</p>
+        </div>
+      </div>
+      <div class="schedule-item">
+        <span class="duration">10 min</span>
+        <div>
+          <h4>Synthesis and next steps</h4>
+          <p>Organizers draw together the judgments, open questions, and possible interventions into an initial research agenda, and outline plans for post-workshop outputs.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 5. CALL FOR PARTICIPATION -->
+  <div class="section" id="cfp">
+    <h2>Call for Participation</h2>
+    <p>
+      As LLMs are integrated into everyday products and enterprise workflows, making them safe for users relies on multiple human judgments: what counts as harm, where to draw the line, which cases to test, and what to assume when a policy is ambiguous. Yet these judgments, made under uncertainty and shaped by organizational and cultural contexts, rarely get attention in AI safety, which is often seen as primarily a technical practice.
+    </p>
+    <p>
+      We invite submissions of <strong>1–4 pages (excluding references) in ACM single-column format</strong> that discuss specific human judgments in AI safety practice and the factors that shaped them, in one of two forms:
+    </p>
+    <ul class="cfp-list">
+      <li><strong>Paper-style contributions</strong>, such as position papers, preliminary findings, works in progress, or late-breaking work.</li>
+      <li><strong>Ideas and reflections</strong>, such as provocations, accounts from AI safety practice, reflections on the judgments behind one's own published AI safety work (e.g., at NeurIPS or ACL) that did not make it into the paper, or reflections on how AI safety research is conducted more broadly.</li>
+    </ul>
+    <p>
+      Submissions will be reviewed by the organizers and invited reviewers from HCI, RAI, and AI safety, based on relevance to the theme and potential to spark discussion, while ensuring diversity of perspectives across academia and industry, disciplines, and regions. The judgments raised in accepted submissions will serve as starting material for the group activities.
+    </p>
+    <p>
+      With authors' consent, accepted papers will appear on CEUR-WS, with a non-archival option. At least one author per accepted submission must attend in person.
+    </p>
+
+    <h3 class="sub">Important Dates</h3>
+    <table class="dates-table">
+      <tr><td>Submission deadline</td><td>TBA</td></tr>
+      <tr><td>Notification of acceptance</td><td>TBA</td></tr>
+      <tr><td>Camera-ready deadline</td><td>TBA</td></tr>
+      <tr><td>Workshop</td><td>TBA, CHI 2027</td></tr>
+    </table>
+  </div>
+
+  <!-- CTA -->
+  <div class="cta-section">
+    <h2>Submit Your Work</h2>
+    <p>Share the judgments behind your AI safety research or practice.</p>
+    <a class="cta-btn" href="SUBMISSION_LINK" target="_blank">Submit a Paper</a>
+  </div>
+
+  <!-- 6. ORGANIZERS -->
+  <div class="people-section" id="organizers">
+    <h2>Organizers</h2>
+    <div class="organizers-grid">
+
+      <div class="person-card">
+        <div class="photo"><img src="ram.jpg" alt="Ramaravind Kommiya Mothilal" /></div>
+        <span class="person-name"><a href="https://ramaravind.com/" target="_blank">Ramaravind Kommiya Mothilal</a></span>
+        <span class="person-affiliation">University of Toronto</span>
+      </div>
+
+      <div class="person-card">
+        <div class="photo"><img src="" alt="Abdullah Hasan Safir" /></div>
+        <span class="person-name">Abdullah Hasan Safir</span>
+        <span class="person-affiliation">University of Cambridge</span>
+      </div>
+
+      <div class="person-card">
+        <div class="photo"><img src="" alt="Willem van der Maden" /></div>
+        <span class="person-name">Willem van der Maden</span>
+        <span class="person-affiliation">IT University of Copenhagen</span>
+      </div>
+
+      <div class="person-card">
+        <div class="photo"><img src="" alt="Akhil Polamarasetty" /></div>
+        <span class="person-name">Akhil Polamarasetty</span>
+        <span class="person-affiliation">University College London</span>
+      </div>
+
+      <div class="person-card">
+        <div class="photo"><img src="" alt="Su Lin Blodgett" /></div>
+        <span class="person-name">Su Lin Blodgett</span>
+        <span class="person-affiliation">Mila - Québec AI Institute</span>
+      </div>
+
+      <div class="person-card">
+        <div class="photo"><img src="shion.jpg" alt="Shion Guha" /></div>
+        <span class="person-name"><a href="https://shionguha.ca/" target="_blank">Shion Guha</a></span>
+        <span class="person-affiliation">University of Toronto</span>
+      </div>
+
+      <div class="person-card">
+        <div class="photo"><img src="ishtiaque.avif" alt="Syed Ishtiaque Ahmed" /></div>
+        <span class="person-name"><a href="https://www.ishtiaque.net/" target="_blank">Syed Ishtiaque Ahmed</a></span>
+        <span class="person-affiliation">University of Toronto</span>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ORG LOGOS -->
+  <div class="org-logos-section">
+    <div class="logos-row">
+      <div class="logo-slot"><img src="uoft.png" alt="University of Toronto" /></div>
+      <div class="logo-slot"><img src="" alt="University of Cambridge" /></div>
+      <div class="logo-slot"><img src="" alt="IT University of Copenhagen" /></div>
+      <div class="logo-slot"><img src="" alt="University College London" /></div>
+      <div class="logo-slot"><img src="" alt="Mila - Québec AI Institute" /></div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    &copy; 2026 · JUDGE · CHI 2027 Workshop
+  </footer>
+
+</body>
+</html>
